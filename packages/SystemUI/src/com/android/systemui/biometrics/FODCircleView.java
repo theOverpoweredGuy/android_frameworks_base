@@ -107,7 +107,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
     private FODAnimation mFODAnimation;
     private boolean mIsRecognizingAnimEnabled;
-    private boolean mShouldRemoveIconOnAOD;
     private boolean mScreenOffFodEnabled;
     private boolean mScreenOffFodIconEnabled;
 
@@ -173,15 +172,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-                if (mShouldRemoveIconOnAOD) {
-                    resetFODIcon(false);
-                }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
-            }
-
-            if (mShouldRemoveIconOnAOD && !dreaming) {
-                resetFODIcon(true);
             }
         }
 
@@ -450,23 +442,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         setKeepScreenOn(false);
     }
 
-    private void resetFODIcon(boolean show) {
-        if (show) {
-            setFODIcon();
-        } else {
-            this.setImageResource(0);
-        }
-    }
-
-    private void setFODIcon() {
-        if (mIsDreaming && mShouldRemoveIconOnAOD) {
-            return;
-        }
-
-        this.setImageResource(R.drawable.fod_icon_default);
-        this.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-    }
-
     public void show() {
         if (mIsBouncer) {
             // Ignore show calls when Keyguard pin screen is being shown
@@ -608,11 +583,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
     private void updateSettings() {
         mIsRecognizingAnimEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_RECOGNIZING_ANIMATION, 1) != 0;
-        mScreenOffFodEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SCREEN_OFF_FOD, 0) != 0;
-        mScreenOffFodIconEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SCREEN_OFF_FOD_ICON, 1) != 0;
-        mShouldRemoveIconOnAOD = mScreenOffFodEnabled && !mScreenOffFodIconEnabled;
     }
 }
 

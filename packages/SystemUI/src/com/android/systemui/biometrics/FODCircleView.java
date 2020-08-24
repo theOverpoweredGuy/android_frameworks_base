@@ -218,10 +218,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
         @Override
         public void onScreenTurnedOff() {
-            mScreenTurnedOn = false;
             hideCircle();
         }
-
 
         @Override
         public void onBiometricHelp(int msgId, String helpString,
@@ -470,14 +468,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
     }
 
     public void show() {
-
-        if (!mUpdateMonitor.isScreenOn()) {
-            // Keyguard is shown just after screen turning off
-            return;
-        }
-
-        if (mIsBouncer && !isPinOrPattern(mUpdateMonitor.getCurrentUser())) {
-            // Ignore show calls when Keyguard password screen is being shown
+        if (mIsBouncer) {
+            // Ignore show calls when Keyguard pin screen is being shown
             return;
         }
 

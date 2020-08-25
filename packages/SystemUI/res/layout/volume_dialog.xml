@@ -33,7 +33,8 @@
         android:id="@+id/synth_music_main"
         android:layout_width="@dimen/custom_volume_dialog_seekbar_height"
         android:layout_height="@dimen/custom_volume_dialog_seekbar_height"
-        android:layout_gravity="end"
+        android:layout_gravity="right"
+        android:gravity="right"
         android:translationZ="@dimen/volume_dialog_elevation" >
 
         <ImageView

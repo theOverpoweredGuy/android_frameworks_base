@@ -288,8 +288,10 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         mPressedView = new ImageView(context)  {
             @Override
             protected void onDraw(Canvas canvas) {
+							if (mIsCircleShowing) {
                 canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
-                super.onDraw(canvas);
+              }
+								super.onDraw(canvas);
             }
         };
 
@@ -322,10 +324,10 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         if (mIsCircleShowing) {
             canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
         }
+				super.onDraw(canvas);
     }
 
     @Override
@@ -417,7 +419,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         if (mIsAuthenticated) {
             return;
         }
-
+        mIsCircleShowing = true;
         setKeepScreenOn(true);
 
         setDim(true);
@@ -436,7 +438,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
         dispatchRelease();
         setDim(false);
-
         setKeepScreenOn(false);
     }
 
